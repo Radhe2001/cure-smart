@@ -1,16 +1,56 @@
 'use client';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function Login() {
+	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [remember, setRemember] = useState(false);
 	const [user, setUser] = useState('Patient');
 	const [toggle, setToggle] = useState(false);
+	useEffect(() => {
+		let rem = localStorage.getItem('remember');
+		if (rem) router.push('/patient');
+	}, []);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (email && password) {
+			if (user === 'Patient') {
+				axios
+					.post('http://localhost:5000/user/login', {
+						email: email,
+						password: password,
+					})
+					.then((data) => {
+						if (data.status === 200) {
+							if (remember === true)
+								localStorage.setItem('remember', true);
+							localStorage.setItem('token', data.data.token);
+							router.push('/patient');
+						} else alert('Failed to login, Try Again');
+					})
+					.catch((error) => {
+						if (error.response.status !== undefined) {
+							if (error.response.status === 400)
+								alert('No such user exists');
+							else if (error.response.status === 500)
+								alert('Please try again to login');
+							else alert('Some databse error occured');
+						} else {
+							alert('Some Unexprected error occured');
+						}
+					});
+			} else if (user === 'Doctor') {
+			} else {
+			}
+		} else alert('First fill all the fields');
+	};
 	return (
 		<section className="">
-			<form className="w-[20vw]">
+			<form className="w-[20vw]" onSubmit={handleSubmit}>
 				<div className="grid mb-6">
 					<label
 						className="mb-2 text-white text-xl tracking-wider font-serif font-semibold italic"
@@ -64,9 +104,7 @@ function Login() {
 							className="border-gray-300 text-2xl font-normal font-serif tracking-wider rounded-lg px-4 py-2 focus:outline-none border-none text-slate-800 w-full"
 							name="user"
 							value={user}
-							onChange={(e) => 
-								setUser(e.target.value)
-							}
+							onChange={(e) => setUser(e.target.value)}
 						>
 							<option value="Patient">Patient</option>
 							<option value="Doctor">Doctor</option>
@@ -80,7 +118,9 @@ function Login() {
 						type="checkbox"
 						name="remember"
 						id="remember"
-						onChange={(e) => setRemember(e.target.value)}
+						onChange={(e) => {
+							setRemember(e.target.checked);
+						}}
 					/>
 					<label
 						className="text-white text-xl tracking-wider font-serif font-semibold italic"

@@ -1,10 +1,18 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function Navbar() {
+	const router = useRouter();
 	const [showFull, setShowFull] = useState(false);
 	const [active, setActive] = useState(0);
+	const handleSignOut = (e) => {
+		e.preventDefault();
+		localStorage.removeItem('token');
+		localStorage.removeItem('remember');
+		router.push('/');
+	};
 	return (
 		<nav
 			className={`flex items-center place-content-center h-screen  ${
@@ -177,6 +185,7 @@ function Navbar() {
 						className={`flex ${
 							showFull ? 'w-[13vw]' : 'w-[3vw]'
 						}  gap-4 place-items-center hover:bg-[#91398B] px-3 py-2 rounded-xl`}
+						onClick={handleSignOut}
 					>
 						<img
 							src="/images/Sign_out.png"

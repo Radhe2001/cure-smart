@@ -12,32 +12,34 @@ function Register() {
 	const [toggle, setToggle] = useState(false);
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		if (user === 'Patient') {
-			axios
-				.post('http://localhost:5000/user/register', {
-					name: name,
-					email: email,
-					password: password,
-				})
-				.then((data) => {
-					if (data.status === 200) alert('Registration successful');
-					else alert('Failed to register, Try Again');
-				})
-				.catch((err) => {
-					if (err.response.status !== undefined) {
-						if (err.response.status === 400)
-							alert('User already exists');
-						else if (err.response.status === 500)
-							alert('Please try again to register');
-						else alert('Some databse error occured');
-					} else {
-						alert('Some Unexprected error occured');
-					}
-				});
-		} else if (user === 'Doctor') {
-		} else {
-		}
+		if (name && password && email) {
+			if (user === 'Patient') {
+				axios
+					.post('http://localhost:5000/user/register', {
+						name: name,
+						email: email,
+						password: password,
+					})
+					.then((data) => {
+						if (data.status === 200)
+							alert('Registration successful');
+						else alert('Failed to register, Try Again');
+					})
+					.catch((err) => {
+						if (err.response.status !== undefined) {
+							if (err.response.status === 400)
+								alert('User already exists');
+							else if (err.response.status === 500)
+								alert('Please try again to register');
+							else alert('Some databse error occured');
+						} else {
+							alert('Some Unexprected error occured');
+						}
+					});
+			} else if (user === 'Doctor') {
+			} else {
+			}
+		} else alert('First fill all the fields');
 	};
 	return (
 		<section className="">

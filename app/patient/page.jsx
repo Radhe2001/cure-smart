@@ -1,11 +1,17 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PatientDetails from './components/PatientDetails';
 import Appointments from './components/Appointments';
 import PastTreatments from './components/PastTreatments';
 import Requests from './components/Requests';
 import Status from './components/Status';
+import { useRouter } from 'next/navigation';
 export default function Home() {
+	const router = useRouter();
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		if (!token) router.push('/');
+	}, []);
 	return (
 		<main className="bg-[#F9AAD0] h-[84vh] ">
 			<center className="mb-6">
