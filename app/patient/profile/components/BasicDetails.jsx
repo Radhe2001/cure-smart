@@ -95,7 +95,7 @@ function BasicDetails() {
 										/>
 										<label
 											htmlFor="fileInput"
-											className="cursor-pointer bg-blue-500 text-white px-4 py-2  h-[2vw] w-[2vw] bg-cover rounded-full"
+											className=" cursor-pointer bg-blue-500 text-white px-4 py-2  h-[2vw] w-[2vw] bg-cover rounded-full"
 											style={{
 												backgroundImage:
 													'url(/images/add_image.png)',

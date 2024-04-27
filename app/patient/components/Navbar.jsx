@@ -120,7 +120,10 @@ function Navbar() {
 						</div>
 						<div className="flex place-content-center mb-10 ">
 							<Link
-								href="/patient/raiserequest"
+								href={{
+									pathname: '/patient/raiserequest',
+									query: { doc: 'any' },
+								}}
 								className={`flex ${
 									showFull ? 'w-[13vw]' : 'w-[3vw]'
 								}  gap-4 place-items-center  ${

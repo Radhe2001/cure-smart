@@ -1,7 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAppData } from '@/app/context';
 
 function Settings() {
+	const { darkBg, setDarkBg } = useAppData();
 	const [wantToLogin, setWantToLogin] = useState(false);
 	const [showInfo, setShowInfo] = useState(false);
 	const [showContact, setShowContact] = useState(false);
@@ -10,17 +12,20 @@ function Settings() {
 	const [password, setPassword] = useState(false);
 	const handleDelete = () => {};
 	return (
-		<section className="pb-10">
+		<section className={`pb-10 `}>
 			<div
-				className={`${
+				className={`${darkBg ? 'bg-[#503642]' : 'bg-[#F9AAD0]'} ${
 					showInfo ? 'block' : 'hidden'
-				} fixed ml-[4vw] w-[100vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
+				} fixed ml-[4vw] w-[96vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
 			>
-				<div className=" bg-[#91398b] w-[35vw] h-[23vw] ml-auto rounded-3xl p-6 shadow-2xl shadow-slate-800">
+				<div className=" bg-[#91398b] w-[35vw] h-[23vw] ml-auto mr-auto rounded-3xl p-6 shadow-2xl shadow-black">
 					<div className="relative w-full">
 						<button
 							className="absolute right-0 px-4 text-3xl text-white font-semibold"
-							onClick={() => setShowInfo(false)}
+							onClick={() => {
+								setShowInfo(false);
+								setDarkBg(false);
+							}}
 						>
 							x
 						</button>
@@ -51,15 +56,18 @@ function Settings() {
 				</div>
 			</div>
 			<div
-				className={`${
+				className={`${darkBg ? 'bg-[#503642]' : 'bg-[#F9AAD0]'} ${
 					showContact ? 'block' : 'hidden'
-				} fixed ml-[4vw] w-[100vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
+				} fixed ml-[4vw] w-[96vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
 			>
-				<div className=" bg-[#91398b] w-[30vw] h-[16vw] ml-auto rounded-3xl p-6 shadow-2xl shadow-slate-800">
+				<div className=" bg-[#91398b] w-[30vw] h-[16vw] ml-auto mr-auto rounded-3xl p-6 shadow-2xl shadow-slate-800">
 					<div className="relative w-full">
 						<button
 							className="absolute right-0 px-4 text-3xl text-white font-semibold"
-							onClick={() => setShowContact(false)}
+							onClick={() => {
+								setShowContact(false);
+								setDarkBg(false);
+							}}
 						>
 							x
 						</button>
@@ -107,15 +115,18 @@ function Settings() {
 				</div>
 			</div>
 			<div
-				className={`${
+				className={`${darkBg ? 'bg-[#503642]' : 'bg-[#F9AAD0]'} ${
 					showDeleteDesclaimer ? 'block' : 'hidden'
-				} fixed ml-[4vw] w-[100vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
+				} fixed ml-[4vw] w-[96vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
 			>
-				<div className=" bg-[#91398b] w-[28vw] h-[17vw] ml-auto rounded-3xl p-6 shadow-2xl shadow-slate-800">
+				<div className=" bg-[#91398b] w-[28vw] h-[17vw] ml-auto mr-auto rounded-3xl p-6 shadow-2xl shadow-slate-800">
 					<div className="relative w-full">
 						<button
 							className="absolute right-0 px-4 text-3xl text-white font-semibold"
-							onClick={() => setShowDeleteDesclaimer(false)}
+							onClick={() => {
+								setShowDeleteDesclaimer(false);
+								setDarkBg(false);
+							}}
 						>
 							x
 						</button>
@@ -159,15 +170,18 @@ function Settings() {
 				</div>
 			</div>{' '}
 			<div
-				className={`${
+				className={`${darkBg ? 'bg-[#503642]' : 'bg-[#F9AAD0]'} ${
 					showPassword ? 'block' : 'hidden'
-				} fixed ml-[4vw] w-[100vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
+				} fixed ml-[4vw] w-[96vw] h-[100vh] flex  z-10 pr-[8vw] pt-[4vw]`}
 			>
-				<div className=" bg-[#91398b] w-[34vw] h-[16vw] ml-auto rounded-3xl p-6 shadow-2xl shadow-slate-800">
+				<div className=" bg-[#91398b] w-[34vw] h-[16vw] ml-auto mr-auto rounded-3xl p-6 shadow-2xl shadow-slate-800">
 					<div className="relative w-full">
 						<button
 							className="absolute right-0 px-4 text-3xl text-white font-semibold"
-							onClick={() => setShowPassword(false)}
+							onClick={() => {
+								setShowPassword(false);
+								setDarkBg(false);
+							}}
 						>
 							x
 						</button>
@@ -236,7 +250,10 @@ function Settings() {
 						<div className="flex  place-items-center">
 							<button
 								className="font-serif italic text-4xl font-bold text-[#F9AAD0] bg-white h-[2.5vw] w-[2.5vw] rounded-full"
-								onClick={() => setShowInfo(true)}
+								onClick={() => {
+									setDarkBg(true);
+									setShowInfo(true);
+								}}
 							>
 								i
 							</button>
@@ -302,7 +319,10 @@ function Settings() {
 							</h2>
 							<button
 								className="text-3xl font-serif font-medium text-white bg-[#5d0e57] px-5 py-2 rounded-2xl  hover:bg-[#4a170baa]"
-								onClick={() => setShowDeleteDesclaimer(true)}
+								onClick={() => {
+									setDarkBg(true);
+									setShowDeleteDesclaimer(true);
+								}}
 							>
 								Delete
 							</button>
@@ -317,7 +337,10 @@ function Settings() {
 								</button>
 								<button
 									className="text-3xl font-serif w-[10vw] font-medium text-white bg-[#5d0e57] px-5 py-2 rounded-2xl  hover:bg-[#4a170baa]"
-									onClick={() => setShowContact(true)}
+									onClick={() => {
+										setDarkBg(true);
+										setShowContact(true);
+									}}
 								>
 									Contact Us
 								</button>
