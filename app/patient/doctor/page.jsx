@@ -1,7 +1,9 @@
-import React from 'react';
-
+'use client';
+import React, { useState } from 'react';
+import Link from 'next/link';
 function Doctor() {
 	const arr = [1, 2, 3, 4, 5, 6];
+	const [name, setName] = useState('radhew');
 	return (
 		<section className="pb-10">
 			<center className="text-white text-5xl font-serif font-semibold italic tracking-wider">
@@ -13,7 +15,7 @@ function Doctor() {
 						return (
 							<div
 								className="bg-[#91398b] rounded-3xl w-[23vw] py-[2vw]"
-								key={index} 
+								key={index}
 							>
 								<div className="flex place-content-center">
 									<img
@@ -51,11 +53,21 @@ function Doctor() {
 										{4.5}
 									</h3>
 								</center>
-								<div className="flex place-content-center place-items-center">
+								<Link
+									className="flex place-content-center place-items-center"
+									href={{
+										pathname: '/patient/raiserequest',
+										query: {
+											doc: `${
+												name === '' ? 'any' : name
+											}`,
+										},
+									}}
+								>
 									<button className=" text-white text-xl font-serif font-semibold tracking-widest bg-[#3b1739c5] px-[2.5vw] py-2 rounded-full">
 										Request Prescription
 									</button>
-								</div>
+								</Link>
 							</div>
 						);
 					})}

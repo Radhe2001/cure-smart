@@ -10,13 +10,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en">
-			<head>
-				<link
-					rel="stylesheet"
-					href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap"
-				/>
-			</head>
+		<html>
 			<body className={`${inter.className} bg-[#F9AAD0]`}>
 				<AppProvider>{children}</AppProvider>
 			</body>

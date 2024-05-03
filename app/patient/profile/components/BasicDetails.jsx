@@ -1,37 +1,76 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function BasicDetails() {
 	const [selectedOption, setSelectedOption] = useState('male');
-	const [language, setLanguage] = useState('English');
+	const [language, setLanguage] = useState('');
 	const [disabled, setDisabled] = useState(true);
 	const [name, setName] = useState('');
 	const [dob, setDob] = useState('');
-	const [file, setFile] = useState('');
+	const [file, setFile] = useState('/images/profile_default.png');
 	const [email, setEmail] = useState('');
 	const [number, setNumber] = useState('');
 	const [address, setAddress] = useState('');
+	const [toggle, setToggle] = useState(false);
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		axios
+			.get('http://localhost:5000/user/get', {
+				headers: {
+					Authorization: token,
+				},
+			})
+			.then((data) => {
+				setName(data.data.data.name);
+				setDob(data.data.data.dob);
+				setEmail(data.data.data.email);
+				setNumber(data.data.data.phone);
+				setSelectedOption(data.data.data.gender);
+				setLanguage(data.data.data.language);
+				setAddress(data.data.data.address);
+				if (data.data.data.image !== '')
+					setFile(
+						'http://localhost:5000/Images/' + data.data.data.image
+					);
+				else setFile('/images/profile_default.png');
+			})
+			.catch((err) => alert('some error occured please try again'));
+	}, [toggle]);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setDisabled(true);
-		console.log(
-			'name : ' +
-				name +
-				' email : ' +
-				email +
-				' dob : ' +
-				dob +
-				' file : ' +
-				file +
-				' gender : ' +
-				selectedOption +
-				' number : ' +
-				number +
-				' address : ' +
-				address +
-				' language : ' +
-				language
-		);
+		let token = localStorage.getItem('token');
+		const authorization = {
+			headers: {
+				Authorization: token,
+			},
+		};
+		if (token && file) {
+			const formData = new FormData();
+			formData.append('name', name);
+			formData.append('email', email);
+			formData.append('dob', dob);
+			formData.append('file', file);
+			formData.append('gender', selectedOption);
+			formData.append('phone', number);
+			formData.append('address', address);
+			formData.append('language', language);
+			axios
+				.post(
+					'http://localhost:5000/user/basicprofile',
+					formData,
+					authorization
+				)
+				.then((data) => {
+					if (data.status === 200) alert('data saved successfully');
+					else alert('failed to save data');
+					setToggle(!toggle);
+				})
+				.catch((err) => {
+					alert('Some unexpected error occurred');
+				});
+		} else alert('please provide the image');
 	};
 	return (
 		<section className="">
@@ -50,6 +89,7 @@ function BasicDetails() {
 								name="name"
 								className="w-[30vw] px-6 py-3 text-2xl font-serif font-semibold tracking-wider rounded-2xl bg-[#f9aad0] text-slate-800"
 								disabled={disabled}
+								value={name}
 								onChange={(e) => setName(e.target.value)}
 								required={true}
 							/>
@@ -66,6 +106,7 @@ function BasicDetails() {
 								className="w-[20vw] px-6 py-3 text-2xl font-serif font-semibold tracking-wider rounded-2xl bg-[#f9aad0] text-slate-800"
 								name="dob"
 								disabled={disabled}
+								value={dob}
 								onChange={(e) => setDob(e.target.value)}
 								required={true}
 							/>
@@ -78,20 +119,19 @@ function BasicDetails() {
 								<div
 									className="h-[11vw] w-[11vw] bg-cover"
 									style={{
-										backgroundImage:
-											'url(/images/profile_default.png)',
+										backgroundImage: `url(${file})`,
 									}}
 								>
-									<div class="relative flex place-content-end place-items-end h-full mt-1">
+									<div className="relative flex place-content-end place-items-end h-full mt-1">
 										<input
 											type="file"
 											id="fileInput"
 											className="hidden"
 											disabled={disabled}
-											onChange={(e) =>
-												setFile(e.target.files[0])
-											}
-											required={true}
+											onChange={(e) => {
+												setFile(e.target.files[0]);
+												console.log(e.target.files);
+											}}
 										/>
 										<label
 											htmlFor="fileInput"
@@ -118,8 +158,8 @@ function BasicDetails() {
 								<label className="text-white text-xl tracking-wider font-serif font-semibold italic mb-2  flex place-items-center">
 									<input
 										type="radio"
-										value="male"
 										name="gender"
+										value="male"
 										checked={selectedOption === 'male'}
 										onChange={(e) => {
 											setSelectedOption(e.target.value);
@@ -158,6 +198,7 @@ function BasicDetails() {
 								type="number"
 								className="w-[20vw] px-6 py-3 text-2xl font-serif font-semibold tracking-widest rounded-2xl bg-[#f9aad0] active:bg-[#f9aad0] text-slate-800"
 								name="phone"
+								value={number}
 								onChange={(e) => setNumber(e.target.value)}
 								required={true}
 								disabled={disabled}
@@ -176,6 +217,7 @@ function BasicDetails() {
 								name="email"
 								onChange={(e) => setEmail(e.target.value)}
 								required={true}
+								value={email}
 								disabled={disabled}
 							/>
 						</div>
@@ -212,6 +254,7 @@ function BasicDetails() {
 								name="address"
 								className="border-gray-300 text-2xl font-normal font-serif tracking-wider rounded-2xl px-6 py-3 h-[6vw] focus:outline-none border-none text-slate-800 bg-[#f9aad0] w-[35vw]"
 								onChange={(e) => setAddress(e.target.value)}
+								value={address}
 								required={true}
 								disabled={disabled}
 							></textarea>

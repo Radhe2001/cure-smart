@@ -69,7 +69,9 @@ function Raiserequest({ searchParams }) {
 									type="number"
 									className="border-gray-300 text-2xl font-normal font-serif tracking-wider rounded-2xl px-6 py-3 h-[6vw] focus:outline-none border-none text-slate-800 bg-[#f9aad0] w-[35vw]"
 									name="phone"
-									onChange={(e) => setDescription(e.target.value)}
+									onChange={(e) =>
+										setDescription(e.target.value)
+									}
 									required={true}
 								></textarea>
 							</div>
@@ -102,6 +104,11 @@ function Raiserequest({ searchParams }) {
 										setSymptoms(e.target.files[0])
 									}
 								/>
+							</div>
+							<div className="flex place-content-center place-items-center mt-[1vw]">
+								<button className=" text-white text-2xl font-serif font-semibold tracking-widest bg-[#502779] px-[2.5vw] py-3 rounded-full">
+									Request Prescription
+								</button>
 							</div>
 						</div>
 					</div>

@@ -1,9 +1,27 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import { useAppData } from '../context';
+import axios from 'axios';
+
 export default function RootLayout({ children }) {
 	const { darkBg, setDarkBg } = useAppData();
+	const [image, setImage] = useState('/images/Profile.png');
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		axios
+			.get('http://localhost:5000/user/get', {
+				headers: {
+					Authorization: token,
+				},
+			})
+			.then((data) => {
+				setImage(
+					'http://localhost:5000/Images/' + data.data.data.image
+				);
+			})
+			.catch((err) => alert('some error occured please try again'));
+	}, []);
 	return (
 		<div className="">
 			<div className="fixed h-[100vh]  bg-[#502779]">
@@ -29,7 +47,7 @@ export default function RootLayout({ children }) {
 						<div
 							className="bg-slate-700 h-14 w-14 bg-cover ml-auto rounded-full"
 							style={{
-								backgroundImage: 'url(/images/Profile.png)',
+								backgroundImage: `url(${image})`,
 							}}
 						></div>
 					</div>

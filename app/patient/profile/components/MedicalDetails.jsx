@@ -1,9 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function MedicalDetails() {
 	const [disabled, setDisabled] = useState(true);
-	const [wight, setWeight] = useState('');
+	const [weight, setWeight] = useState('');
 	const [height, setHeight] = useState('');
 	const [bloodGroup, setBloodGroup] = useState('A+');
 	const [selectedDisease, setSelectedDisease] = useState([]);
@@ -31,6 +32,24 @@ function MedicalDetails() {
 		'Others',
 		'None',
 	];
+	const [toggle, setToggle] = useState(false);
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		axios
+			.get('http://localhost:5000/user/get', {
+				headers: {
+					Authorization: token,
+				},
+			})
+			.then((data) => {
+				setWeight(data.data.data.weight);
+				setHeight(data.data.data.height);
+				setBloodGroup(data.data.data.bloodGroup);
+				setSelectedDisease(data.data.data.illness);
+				setSelectedAllergy(data.data.data.allergy);
+			})
+			.catch((err) => alert('some error occured please try again'));
+	}, [toggle]);
 
 	function handleEditDisease(item, checked) {
 		if (checked) {
@@ -55,6 +74,38 @@ function MedicalDetails() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setDisabled(true);
+		let token = localStorage.getItem('token');
+		const authorization = {
+			headers: {
+				Authorization: token,
+			},
+		};
+		const formData = new FormData();
+		formData.append('bloodGroup', bloodGroup);
+		formData.append('height', height);
+		formData.append('weight', weight);
+		formData.append('illness', selectedDisease);
+		formData.append('allergy', selectedAllergy);
+		axios
+			.post(
+				'http://localhost:5000/user/medicalprofile',
+				{
+					bloodGroup: bloodGroup,
+					height: height,
+					weight: weight,
+					illness: selectedDisease,
+					allergy: selectedAllergy,
+				},
+				authorization
+			)
+			.then((data) => {
+				if (data.status === 200) alert('data saved successfully');
+				else alert('failed to save data');
+				setToggle(!toggle);
+			})
+			.catch((err) => {
+				alert('Some unexpected error occurred');
+			});
 	};
 	return (
 		<section className="">
@@ -97,6 +148,7 @@ function MedicalDetails() {
 								type="number"
 								className="w-[16vw] px-6 py-3 text-2xl font-serif font-semibold tracking-widest rounded-2xl bg-[#f9aad0] text-slate-800 "
 								name="height"
+								value={height}
 								onChange={(e) => setHeight(e.target.value)}
 								required={true}
 								disabled={disabled}
@@ -113,6 +165,7 @@ function MedicalDetails() {
 								type="number"
 								className="w-[16vw] px-6 py-3 text-2xl font-serif font-semibold tracking-widest rounded-2xl bg-[#f9aad0] text-slate-800"
 								name="weight"
+								value={weight}
 								onChange={(e) => setWeight(e.target.value)}
 								required={true}
 								disabled={disabled}

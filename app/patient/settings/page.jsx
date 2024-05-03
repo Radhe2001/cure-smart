@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useAppData } from '@/app/context';
+import axios from 'axios';
 
 function Settings() {
 	const { darkBg, setDarkBg } = useAppData();
@@ -10,6 +11,33 @@ function Settings() {
 	const [showDeleteDesclaimer, setShowDeleteDesclaimer] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [password, setPassword] = useState(false);
+	const [oldPassword, setOldPassword] = useState('');
+	const [newPassword, setNewPassword] = useState('');
+	const [rePassword, setRePassword] = useState('');
+	const [disabled, setDisabled] = useState(true);
+	const [toggle, setToggle] = useState(false);
+	const [name, setName] = useState('User Name');
+	const [phone, setPhone] = useState('0000000000');
+	const [language, setLanguage] = useState('None');
+	const [image, setImage] = useState('/images/profile_default.png');
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		axios
+			.get('http://localhost:5000/user/get', {
+				headers: {
+					Authorization: token,
+				},
+			})
+			.then((data) => {
+				setName(data.data.data.name);
+				setPhone(data.data.data.phone);
+				setLanguage(data.data.data.language);
+				setImage(
+					'http://localhost:5000/Images/' + data.data.data.image
+				);
+			})
+			.catch((err) => alert('some error occured please try again'));
+	}, [toggle]);
 	const handleDelete = () => {};
 	return (
 		<section className={`pb-10 `}>
@@ -220,14 +248,14 @@ function Settings() {
 						<div className="bg-[#91398B] w-[24vw] flex place-items-center gap-[1.5vw] px-[1.5vw] py-[1vw] rounded-2xl">
 							<div className="bg-white rounded-full">
 								<img
-									src="/images/profile_default.png"
+									src={image}
 									alt=""
 									className=" h-[5vw] w-[5vw] rounded-full"
 								/>
 							</div>
 
 							<h1 className="text-3xl font-serif font-medium text-white bg-[#5d0e57] px-5 py-2 rounded-2xl ">
-								Radheshyam Jha
+								{name}
 							</h1>
 						</div>
 						<div className="bg-[#91398B] w-[22vw] flex place-items-center gap-[1.5vw] px-[3vw] py-[1vw] rounded-2xl">
@@ -236,7 +264,7 @@ function Settings() {
 							</h2>
 
 							<h3 className="text-3xl font-serif font-medium text-white bg-[#5d0e57] px-5 py-2 rounded-2xl">
-								6204293537
+								{phone}
 							</h3>
 						</div>
 						<div className="bg-[#91398B] w-[22vw] flex place-items-center gap-[1.5vw] px-[3vw] py-[1vw] rounded-2xl">
@@ -244,7 +272,7 @@ function Settings() {
 								Language
 							</h2>
 							<h2 className="text-3xl font-serif font-medium text-white bg-[#5d0e57] px-5 py-2 rounded-2xl">
-								English
+								{language}
 							</h2>
 						</div>
 						<div className="flex  place-items-center">
@@ -265,34 +293,43 @@ function Settings() {
 								Current Password
 							</h2>
 							<input
-								type="password"
+								type="text"
 								className="w-[15vw] px-6 py-3 text-2xl font-serif font-semibold tracking-wider rounded-2xl bg-[#f9aad0] text-slate-800"
-								disabled={true}
-								// onChange={(e) => setName(e.target.value)}
-								required={true}
+								disabled={disabled}
+								onChange={(e) => setOldPassword(e.target.value)}
 							/>
 							<h2 className="text-3xl font-serif font-medium text-white">
 								New Password
 							</h2>
 							<input
-								type="password"
+								type="text"
 								className="w-[15vw] px-6 py-3 text-2xl font-serif font-semibold tracking-wider rounded-2xl bg-[#f9aad0] text-slate-800"
-								disabled={true}
-								// onChange={(e) => setName(e.target.value)}
-								required={true}
+								disabled={disabled}
+								onChange={(e) => setNewPassword(e.target.value)}
 							/>
 							<input
-								type="password"
+								type="text"
 								className="w-[15vw] px-6 py-3 text-2xl font-serif font-semibold tracking-wider rounded-2xl bg-[#f9aad0] text-slate-800"
-								disabled={true}
-								// onChange={(e) => setName(e.target.value)}
-								required={true}
+								disabled={disabled}
+								onChange={(e) => setRePassword(e.target.value)}
 							/>
 						</div>
 						<div className="flex  place-items-center">
-							<button className="font-serif italic text-4xl font-bold text-[#F9AAD0] bg-white h-[2.5vw] w-[2.5vw] rounded-full">
-								i
-							</button>
+							<div
+								className="font-serif italic text-4xl font-bold bg-[#502779] text-[#F9AAD0]  h-[3vw] w-[3vw] rounded-full bg-cover flex  place-items-center place-content-center cursor-pointer"
+								onClick={() => {
+									setDisabled(!disabled);
+									if (!disabled) alert('hii');
+								}}
+							>
+								<div
+									className="bg-cover p-2 w-[2vw] h-[2vw]"
+									style={{
+										backgroundImage:
+											'url(/images/editpassword.png)',
+									}}
+								></div>
+							</div>
 						</div>
 					</div>
 					<div className="flex gap-[2vw]">
