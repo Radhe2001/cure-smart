@@ -1,6 +1,23 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Requests() {
+	const [requestDetail, setRequsetDetail] = useState([]);
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		const authorization = {
+			headers: {
+				Authorization: token,
+			},
+		};
+		axios
+			.get('http://localhost:5000/user/requests', authorization)
+			.then((data) => {
+				setRequsetDetail(data.data.data);
+			})
+			.catch((err) => alert('some error occured please try again'));
+	}, []);
 	return (
 		<div className="w-full">
 			<center>
@@ -18,7 +35,13 @@ function Requests() {
 							</h3>
 						</div>
 						<h3 className="pl-9 pt-2 text-4xl font-semibold text-white tracking-widest">
-							00
+							{requestDetail.total !== undefined
+								? requestDetail.total < 10
+									? requestDetail.total
+											.toString()
+											.padStart(2, '0')
+									: requestDetail.total.toString()
+								: '00'}
 						</h3>
 					</div>
 					<div className="mb-6">
@@ -29,7 +52,13 @@ function Requests() {
 							</h3>
 						</div>
 						<h3 className="pl-9 pt-2 text-4xl font-semibold text-white tracking-widest">
-							00
+							{requestDetail.active !== undefined
+								? requestDetail.active < 10
+									? requestDetail.active
+											.toString()
+											.padStart(2, '0')
+									: requestDetail.active.toString()
+								: '00'}
 						</h3>
 					</div>
 					<div className="">
@@ -40,7 +69,13 @@ function Requests() {
 							</h3>
 						</div>
 						<h3 className="pl-9 pt-2 text-4xl font-semibold text-white tracking-widest">
-							00
+							{requestDetail.past !== undefined
+								? requestDetail.past < 10
+									? requestDetail.past
+											.toString()
+											.padStart(2, '0')
+									: requestDetail.past.toString()
+								: '00'}
 						</h3>
 					</div>
 				</div>

@@ -1,6 +1,23 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function PatientDetails() {
+	const [patientData, setPatientData] = useState([]);
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		const authorization = {
+			headers: {
+				Authorization: token,
+			},
+		};
+		axios
+			.get('http://localhost:5000/user/patientDetail', authorization)
+			.then((data) => {
+				setPatientData(data.data.data);
+			})
+			.catch((err) => alert('some error occured please try again'));
+	}, []);
 	return (
 		<div className="w-full">
 			<center>
@@ -15,7 +32,9 @@ function PatientDetails() {
 							<h4 className="text-[#F9AAD0] mb-2 text-xl">Age</h4>
 						</center>
 						<center>
-							<h3 className="text-white text-2xl mb-5">36</h3>
+							<h3 className="text-white text-2xl mb-5">
+								{patientData.age}
+							</h3>
 						</center>
 					</div>
 					<div className="">
@@ -25,7 +44,9 @@ function PatientDetails() {
 							</h4>
 						</center>
 						<center>
-							<h3 className="text-white text-2xl mb-5">80 KG</h3>
+							<h3 className="text-white text-2xl mb-5">
+								{patientData.weight} KG
+							</h3>
 						</center>
 					</div>
 					<div className="">
@@ -35,7 +56,9 @@ function PatientDetails() {
 							</h4>
 						</center>
 						<center>
-							<h3 className="text-white text-2xl mb-2">182 cm</h3>
+							<h3 className="text-white text-2xl mb-2">
+								{patientData.height} cm
+							</h3>
 						</center>
 					</div>
 					<div className="">
@@ -46,7 +69,21 @@ function PatientDetails() {
 						</center>
 						<center>
 							<h3 className="text-white text-2xl mb-2">
-								O<sup className="">+</sup>
+								{patientData.bloodGroup !== undefined
+									? patientData.bloodGroup.slice(
+											0,
+											patientData.bloodGroup.length - 1
+									  )
+									: null}
+								<sup className="">
+									{patientData.bloodGroup !== undefined
+										? patientData.bloodGroup.slice(
+												patientData.bloodGroup.length -
+													1,
+												patientData.bloodGroup.length
+										  )
+										: null}
+								</sup>
 							</h3>
 						</center>
 					</div>

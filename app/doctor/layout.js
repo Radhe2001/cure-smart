@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		axios
-			.get('http://localhost:5000/user/get', {
+			.get('http://localhost:5000/doctor/get', {
 				headers: {
 					Authorization: token,
 				},
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
 			<div className="fixed h-[100vh]  bg-[#502779]">
 				<Navbar />
 			</div>
-			<div className=" h-[100vh] bg-[#F9AAD0]">
+			<div className=" h-[100vh] bg-[#F9AAD0]" >
 				<div
 					className={` h-[100vh]  ${
 						darkBg ? 'bg-[#503642]' : 'bg-[#F9AAD0]'

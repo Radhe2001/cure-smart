@@ -18,12 +18,12 @@ function Settings() {
 	const [toggle, setToggle] = useState(false);
 	const [name, setName] = useState('User Name');
 	const [phone, setPhone] = useState('0000000000');
-	const [language, setLanguage] = useState('None');
+	const [specialization, setSpecialization] = useState('Cardiologist');
 	const [image, setImage] = useState('/images/profile_default.png');
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		axios
-			.get('http://localhost:5000/user/get', {
+			.get('http://localhost:5000/doctor/get', {
 				headers: {
 					Authorization: token,
 				},
@@ -31,7 +31,7 @@ function Settings() {
 			.then((data) => {
 				setName(data.data.data.name);
 				setPhone(data.data.data.phone);
-				setLanguage(data.data.data.language);
+				setSpecialization(data.data.data.specialization);
 				setImage(
 					'http://localhost:5000/Images/' + data.data.data.image
 				);
@@ -49,7 +49,7 @@ function Settings() {
 				};
 				axios
 					.post(
-						'http://localhost:5000/user/setpassword',
+						'http://localhost:5000/doctor/setpassword',
 						{ oldPassword: oldPassword, newPassword: newPassword },
 						authorization
 					)
@@ -281,7 +281,7 @@ function Settings() {
 			<section className="flex place-content-center my-10">
 				<div className="w-[78vw] grid gap-[2vw]">
 					<div className="flex gap-[2vw]">
-						<div className="bg-[#91398B] w-[24vw] flex place-items-center gap-[1.5vw] px-[1.5vw] py-[1vw] rounded-2xl">
+						<div className="bg-[#91398B] w-[22vw] flex place-items-center gap-[1vw] px-[1vw] py-[1vw] rounded-2xl">
 							<div className="bg-white rounded-full">
 								<img
 									src={image}
@@ -294,7 +294,7 @@ function Settings() {
 								{name}
 							</h1>
 						</div>
-						<div className="bg-[#91398B] w-[22vw] flex place-items-center gap-[1.5vw] px-[3vw] py-[1vw] rounded-2xl">
+						<div className="bg-[#91398B] w-[20vw] flex place-items-center gap-[1vw] px-[1vw] py-[1vw] rounded-2xl">
 							<h2 className="text-3xl font-serif font-medium text-white">
 								Contact Number
 							</h2>
@@ -303,12 +303,12 @@ function Settings() {
 								{phone}
 							</h3>
 						</div>
-						<div className="bg-[#91398B] w-[22vw] flex place-items-center gap-[1.5vw] px-[3vw] py-[1vw] rounded-2xl">
+						<div className="bg-[#91398B] w-[26vw] flex place-items-center gap-[1vw] px-[2vw] py-[1vw] rounded-2xl">
 							<h2 className="text-3xl font-serif font-medium text-white">
-								Language
+								Specialization
 							</h2>
 							<h2 className="text-3xl font-serif font-medium text-white bg-[#5d0e57] px-5 py-2 rounded-2xl">
-								{language}
+								{specialization}
 							</h2>
 						</div>
 						<div className="flex  place-items-center">

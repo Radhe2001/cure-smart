@@ -37,7 +37,30 @@ function Register() {
 						}
 					});
 			} else if (user === 'Doctor') {
+				axios
+					.post('http://localhost:5000/doctor/register', {
+						name: name,
+						email: email,
+						password: password,
+					})
+					.then((data) => {
+						if (data.status === 200)
+							alert('Registration successful');
+						else alert('Failed to register, Try Again');
+					})
+					.catch((err) => {
+						if (err.response.status !== undefined) {
+							if (err.response.status === 400)
+								alert('User already exists');
+							else if (err.response.status === 500)
+								alert('Please try again to register');
+							else alert('Some databse error occured');
+						} else {
+							alert('Some Unexprected error occured');
+						}
+					});
 			} else {
+				alert("You can't register admin by yourself");
 			}
 		} else alert('First fill all the fields');
 	};

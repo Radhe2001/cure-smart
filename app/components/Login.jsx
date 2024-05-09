@@ -13,7 +13,8 @@ function Login() {
 	const [toggle, setToggle] = useState(false);
 	useEffect(() => {
 		let rem = localStorage.getItem('remember');
-		if (rem) router.push('/patient');
+		if (rem === 'patient') router.push('/patient');
+		else if (rem === 'doctor') router.push('/doctor');
 	}, []);
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -27,7 +28,7 @@ function Login() {
 					.then((data) => {
 						if (data.status === 200) {
 							if (remember === true)
-								localStorage.setItem('remember', true);
+								localStorage.setItem('remember', 'patient');
 							localStorage.setItem('token', data.data.token);
 							router.push('/patient');
 						} else alert('Failed to login, Try Again');
@@ -44,7 +45,49 @@ function Login() {
 						}
 					});
 			} else if (user === 'Doctor') {
+				axios
+					.post('http://localhost:5000/doctor/login', {
+						email: email,
+						password: password,
+					})
+					.then((data) => {
+						if (data.status === 200) {
+							if (remember === true)
+								localStorage.setItem('remember', 'doctor');
+							localStorage.setItem('token', data.data.token);
+							router.push('/doctor');
+						} else alert('Failed to login, Try Again');
+					})
+					.catch((error) => {
+						if (error.response.status !== undefined) {
+							if (error.response.status === 400)
+								alert('No such user exists');
+							else if (error.response.status === 500)
+								alert('Please try again to login');
+							else alert('Some databse error occured');
+						} else {
+							alert('Some Unexprected error occured');
+						}
+					});
 			} else {
+				axios
+					.post('http://localhost:5000/admin/login', {
+						email: email,
+						password: password,
+					})
+					.then((data) => {
+						if (data.status === 200) {
+							router.push('/admin');
+						} else alert('Failed to login, Try Again');
+					})
+					.catch((error) => {
+						if (error.response.status !== undefined) {
+							if (error.response.status === 400)
+								alert('Unauthorized access');
+						} else {
+							alert('Some Unexprected error occured');
+						}
+					});
 			}
 		} else alert('First fill all the fields');
 	};

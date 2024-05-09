@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppData } from '@/app/context';
 import axios from 'axios';
 
-function ActiveTreatment({ setView, setViewId }) {
+function ActiveTreatment({ setAdd, setAddId }) {
 	const [array, setArray] = useState([]);
 	const { darkBg, setDarkBg } = useAppData();
 	useEffect(() => {
@@ -14,7 +14,7 @@ function ActiveTreatment({ setView, setViewId }) {
 			},
 		};
 		axios
-			.get('http://localhost:5000/user/activeTreatment', authorization)
+			.get('http://localhost:5000/doctor/activeTreatment', authorization)
 			.then((data) => {
 				setArray(data.data.data);
 			})
@@ -24,7 +24,7 @@ function ActiveTreatment({ setView, setViewId }) {
 		<div className="w-full">
 			<center>
 				<h3 className="text-white font-semibold tracking-wider text-3xl font-serif py-4">
-					Active Treatments
+					Active Prescription Request
 				</h3>
 			</center>
 			<div className="px-4 py-8 rounded-3xl bg-[#91398B]">
@@ -53,12 +53,12 @@ function ActiveTreatment({ setView, setViewId }) {
 								<div className="grid">
 									<center>
 										<h5 className="text-[#F9AAD0]">
-											Doctor
+											Patient
 										</h5>
 									</center>
 									<center>
 										<h3 className="text-[#91398B] text-xl font-semibold">
-											{item.doctor.name}
+											{item.patient.name}
 										</h3>
 									</center>
 								</div>
@@ -66,8 +66,8 @@ function ActiveTreatment({ setView, setViewId }) {
 									className="flex place-items-center gap-4 cursor-pointer"
 									onClick={() => {
 										setDarkBg(true);
-										setView(true);
-										setViewId(item._id);
+										setAdd(true);
+										setAddId(item._id);
 									}}
 								>
 									<img
@@ -76,7 +76,7 @@ function ActiveTreatment({ setView, setViewId }) {
 										alt=""
 									/>
 									<h4 className="text-[#F9AAD0] text-xl">
-										Note
+										Add Prescription
 									</h4>
 								</div>
 							</div>

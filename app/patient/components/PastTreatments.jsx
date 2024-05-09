@@ -1,68 +1,25 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import { useAppData } from '@/app/context';
+import axios from 'axios';
 
-function PastTreatments() {
-	let arr = [
-		{
-			date: "18 Aug '23",
-			treatment: 'Orthopedic',
-			doctor: 'Dr. XYZ',
-		},
-		{
-			date: "2 Mar '24",
-			treatment: 'ENT',
-			doctor: 'Dr. ABC',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-		{
-			date: "6 Nov '23",
-			treatment: 'Dental',
-			doctor: 'Dr. CDE',
-		},
-	];
+function PastTreatments({ setView, setViewId }) {
+	const [array, setArray] = useState([]);
+	const { darkBg, setDarkBg } = useAppData();
+	useEffect(() => {
+		let token = localStorage.getItem('token');
+		const authorization = {
+			headers: {
+				Authorization: token,
+			},
+		};
+		axios
+			.get('http://localhost:5000/user/pastTreatment', authorization)
+			.then((data) => {
+				setArray(data.data.data);
+			})
+			.catch((err) => alert('some error occured please try again'));
+	}, []);
 	return (
 		<div className="w-full">
 			<center>
@@ -71,8 +28,8 @@ function PastTreatments() {
 				</h3>
 			</center>
 			<div className="px-4 py-8 rounded-3xl bg-[#91398B]">
-				<div className=" px-6 h-[30vh] bg-[#91398B] overflow-x-hidden overflow-y-scroll">
-					{arr.map((item, index) => {
+				<div className=" px-6 h-[24vh] bg-[#91398B] overflow-x-hidden overflow-y-scroll">
+					{array.map((item, index) => {
 						return (
 							<div
 								className="py-2 px-4 mb-4 bg-white grid grid-cols-4 place-content-center place-items-center rounded-md"
@@ -101,11 +58,18 @@ function PastTreatments() {
 									</center>
 									<center>
 										<h3 className="text-[#91398B] text-xl font-semibold">
-											{item.doctor}
+											{item.doctor.name}
 										</h3>
 									</center>
 								</div>
-								<div className="flex place-items-center gap-4 ">
+								<div
+									className="flex place-items-center gap-4 cursor-pointer"
+									onClick={() => {
+										setDarkBg(true);
+										setView(true);
+										setViewId(item._id);
+									}}
+								>
 									<img
 										className="h-8 w-8"
 										src="/images/Note.png"

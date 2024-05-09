@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useAppData } from '@/app/context';
 import axios from 'axios';
 
-function ActiveTreatment({ setView, setViewId }) {
+function PastTreatments({  setView, setViewId }) {
 	const [array, setArray] = useState([]);
 	const { darkBg, setDarkBg } = useAppData();
+
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		const authorization = {
@@ -14,7 +15,7 @@ function ActiveTreatment({ setView, setViewId }) {
 			},
 		};
 		axios
-			.get('http://localhost:5000/user/activeTreatment', authorization)
+			.get('http://localhost:5000/doctor/pastTreatment', authorization)
 			.then((data) => {
 				setArray(data.data.data);
 			})
@@ -24,7 +25,7 @@ function ActiveTreatment({ setView, setViewId }) {
 		<div className="w-full">
 			<center>
 				<h3 className="text-white font-semibold tracking-wider text-3xl font-serif py-4">
-					Active Treatments
+					Completed Prescription Records
 				</h3>
 			</center>
 			<div className="px-4 py-8 rounded-3xl bg-[#91398B]">
@@ -53,17 +54,17 @@ function ActiveTreatment({ setView, setViewId }) {
 								<div className="grid">
 									<center>
 										<h5 className="text-[#F9AAD0]">
-											Doctor
+											Patient
 										</h5>
 									</center>
 									<center>
 										<h3 className="text-[#91398B] text-xl font-semibold">
-											{item.doctor.name}
+											{item.patient.name}
 										</h3>
 									</center>
 								</div>
 								<div
-									className="flex place-items-center gap-4 cursor-pointer"
+									className="flex place-items-center gap-4 cursor-pointer "
 									onClick={() => {
 										setDarkBg(true);
 										setView(true);
@@ -76,7 +77,7 @@ function ActiveTreatment({ setView, setViewId }) {
 										alt=""
 									/>
 									<h4 className="text-[#F9AAD0] text-xl">
-										Note
+										View Prescription
 									</h4>
 								</div>
 							</div>
@@ -88,4 +89,4 @@ function ActiveTreatment({ setView, setViewId }) {
 	);
 }
 
-export default ActiveTreatment;
+export default PastTreatments;

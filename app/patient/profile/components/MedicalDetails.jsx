@@ -80,12 +80,7 @@ function MedicalDetails() {
 				Authorization: token,
 			},
 		};
-		const formData = new FormData();
-		formData.append('bloodGroup', bloodGroup);
-		formData.append('height', height);
-		formData.append('weight', weight);
-		formData.append('illness', selectedDisease);
-		formData.append('allergy', selectedAllergy);
+		
 		axios
 			.post(
 				'http://localhost:5000/user/medicalprofile',
