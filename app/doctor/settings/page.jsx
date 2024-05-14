@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAppData } from '@/app/context';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 function Settings() {
+	const router = useRouter();
 	const { darkBg, setDarkBg } = useAppData();
 	const [wantToLogin, setWantToLogin] = useState(false);
 	const [showInfo, setShowInfo] = useState(false);
@@ -74,7 +76,41 @@ function Settings() {
 			} else alert('New password mismatch');
 		} else alert('Please fill all the fields first');
 	};
-	const handleDelete = () => {};
+	const handleDelete = () => {
+		let token = localStorage.getItem('token');
+		const authorization = {
+			headers: {
+				Authorization: token,
+			},
+		};
+		axios
+			.post(
+				'http://localhost:5000/doctor/delete',
+				{
+					password: password,
+				},
+				authorization
+			)
+			.then((data) => {
+				if (data.status === 200) {
+					localStorage.removeItem('remember');
+					localStorage.removeItem('token');
+					setDarkBg(!darkBg);
+					router.push('/');
+				} else alert('Failed to login, Try Again');
+			})
+			.catch((err) => {
+				if (err.response.status !== undefined) {
+					if (err.response.status === 501)
+						alert('No such user exists');
+					else if (err.response.status === 500)
+						alert("Password don't match");
+					else alert('Some databse error occured');
+				} else {
+					alert('Some Unexprected error occured');
+				}
+			});
+	};
 	return (
 		<section className={`pb-10 `}>
 			<div

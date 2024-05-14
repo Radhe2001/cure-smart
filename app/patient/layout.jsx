@@ -26,6 +26,7 @@ export default function RootLayout({ children }) {
 			})
 			.catch((err) => alert('some error occured please try again'));
 	}, []);
+	
 	return (
 		<div className="">
 			<div className="fixed z-[20] h-[100vh] bg-[#502779]">
@@ -45,7 +46,7 @@ export default function RootLayout({ children }) {
 						!showChat ? 'hidden' : 'block'
 					} w-[28vw] h-[100vh] cursor-pointer flex place-items-end fixed  right-0  top-0 z-[40]`}
 				>
-					<div className=" w-[26vw] h-[35vw] bg-[#cb6ce6] cursor-pointer rounded-2xl mb-[1vw] mr-[2vw] flex place-content-center place-items-center ">
+					<div className=" w-[26vw] h-[35vw] bg-[#cb6ce6] cursor-pointer rounded-2xl mb-[1vw] mr-[2vw] flex place-content-center place-items-center shadow-black shadow-2xl">
 						<ChatBot changeShowChat={changeShowChat} />
 					</div>
 				</div>

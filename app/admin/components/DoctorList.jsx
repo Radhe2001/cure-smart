@@ -34,7 +34,7 @@ function DoctorList() {
 				</h3>
 			</center>
 			<div className="px-4 py-8 rounded-3xl bg-[#91398B]">
-				<div className=" px-6 h-[60vh] bg-[#91398B] overflow-x-hidden overflow-y-scroll">
+				<div className=" px-6 h-[35vh] bg-[#91398B] overflow-x-hidden overflow-y-scroll">
 					{DoctorList.map((item, index) => {
 						return (
 							<div

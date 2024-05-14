@@ -2,29 +2,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function DoctorRequest() {
-	const [requestList, setRequestList] = useState([]);
-	const [toggle, setToggle] = useState(false);
+function NotificationList() {
+	const [notificationList, setNotificationList] = useState([]);
 	useEffect(() => {
 		axios
-			.get('http://localhost:5000/admin/request')
+			.get('http://localhost:5000/admin/notification/get')
 			.then((data) => {
-				if (data.status === 200) {
-					setRequestList(data.data.user);
-				}
+				setNotificationList(data.data);
 			})
-			.catch((err) => console.log(err));
-	}, [toggle]);
-	const handleApprove = (id) => {
+			.catch((err) => alert('failed to add notification'));
+	}, []);
+	const handleRemove = (id) => {
 		axios
-			.post(`http://localhost:5000/admin/approve/${id}`)
+			.delete('http://localhost:5000/admin/notification/delete/' + id)
 			.then((data) => {
-				if (data.status === 200) alert('Doctor approved successfully');
+				alert('Notification removed successfully');
 			})
-			.catch((err) => {
-				if (err.response.status === 400) alert('Some error occured');
-			});
-		setToggle(!toggle);
+			.catch((err) => alert('failed to remove notification'));
 	};
 	return (
 		<div className="w-full">
@@ -34,8 +28,8 @@ function DoctorRequest() {
 				</h3>
 			</center>
 			<div className="px-4 py-8 rounded-3xl bg-[#91398B]">
-				<div className=" px-6 h-[35vh] bg-[#91398B] overflow-x-hidden overflow-y-scroll">
-					{requestList.map((item, index) => {
+				<div className=" px-6 h-[17vh] bg-[#91398B] overflow-x-hidden overflow-y-scroll">
+					{notificationList.map((item, index) => {
 						return (
 							<div
 								className="py-2 px-4 mb-4 bg-white grid grid-cols-3 place-content-center place-items-center rounded-md"
@@ -43,32 +37,32 @@ function DoctorRequest() {
 							>
 								<div className="grid">
 									<center>
-										<h5 className="text-[#F9AAD0]">Name</h5>
+										<h5 className="text-[#F9AAD0]">
+											Notification
+										</h5>
 									</center>
 									<center>
 										<h3 className="text-[#91398B] text-xl font-semibold">
-											{item.name}
+											{item.mes}
 										</h3>
 									</center>
 								</div>
 								<div className="grid">
 									<center>
-										<h5 className="text-[#F9AAD0]">
-											Email
-										</h5>
+										<h5 className="text-[#F9AAD0]">Date</h5>
 									</center>
 									<center>
 										<h3 className="text-[#91398B] text-xl font-semibold">
-											{item.email}
+											{item.date}
 										</h3>
 									</center>
 								</div>
 								<div className="flex place-items-center gap-4 ">
 									<button
 										className="bg-[#91398b] text-white px-6 py-2 text-xl font-semibold tracking-wider rounded-2xl"
-										onClick={() => handleApprove(item._id)}
+										onClick={() => handleRemove(item._id)}
 									>
-										Approve
+										Delete
 									</button>
 								</div>
 							</div>
@@ -80,4 +74,4 @@ function DoctorRequest() {
 	);
 }
 
-export default DoctorRequest;
+export default NotificationList;
