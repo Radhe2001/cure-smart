@@ -7,7 +7,7 @@ function Doctor() {
 	const [data, setData] = useState([]);
 	useEffect(() => {
 		axios
-			.get('http://localhost:5000/admin/doctors')
+			.get('https://cure-smart-backend.onrender.com/admin/doctors')
 			.then((data) => {
 				setData(data.data.user);
 			})
@@ -32,7 +32,7 @@ function Doctor() {
 										src={
 											item.image === ''
 												? '/images/Doctor_logo.png'
-												: 'http://localhost:5000/Images/' +
+												: 'https://cure-smart-backend.onrender.com/Images/' +
 												  item.image
 										}
 										alt=""

@@ -12,7 +12,10 @@ function Requests() {
 			},
 		};
 		axios
-			.get('http://localhost:5000/user/requests', authorization)
+			.get(
+				'https://cure-smart-backend.onrender.com/user/requests',
+				authorization
+			)
 			.then((data) => {
 				setRequsetDetail(data.data.data);
 			})

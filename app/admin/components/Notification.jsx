@@ -6,9 +6,12 @@ function Notification() {
 	const [notification, setNotification] = useState('');
 	const handleAdd = () => {
 		axios
-			.post('http://localhost:5000/admin/notification/add', {
-				notification: notification,
-			})
+			.post(
+				'https://cure-smart-backend.onrender.com/admin/notification/add',
+				{
+					notification: notification,
+				}
+			)
 			.then((data) => {
 				alert('notification added successfully');
 				setNotification('');

@@ -7,7 +7,7 @@ function DoctorList() {
 	const [toggle, setToggle] = useState(false);
 	useEffect(() => {
 		axios
-			.get('http://localhost:5000/admin/doctors')
+			.get('https://cure-smart-backend.onrender.com/admin/doctors')
 			.then((data) => {
 				if (data.status === 200) {
 					setDoctorList(data.data.user);
@@ -17,7 +17,9 @@ function DoctorList() {
 	}, [toggle]);
 	const handleRemove = (id) => {
 		axios
-			.delete(`http://localhost:5000/admin/remove/${id}`)
+			.delete(
+				`https://cure-smart-backend.onrender.com/admin/remove/${id}`
+			)
 			.then((data) => {
 				if (data.status === 200) alert('Doctor deleted successfully');
 			})

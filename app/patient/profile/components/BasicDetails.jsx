@@ -16,7 +16,7 @@ function BasicDetails() {
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		axios
-			.get('http://localhost:5000/user/get', {
+			.get('https://cure-smart-backend.onrender.com/user/get', {
 				headers: {
 					Authorization: token,
 				},
@@ -31,7 +31,8 @@ function BasicDetails() {
 				setAddress(data.data.data.address);
 				if (data.data.data.image !== '')
 					setFile(
-						'http://localhost:5000/Images/' + data.data.data.image
+						'https://cure-smart-backend.onrender.com/Images/' +
+							data.data.data.image
 					);
 				else setFile('/images/profile_default.png');
 			})
@@ -58,7 +59,7 @@ function BasicDetails() {
 			formData.append('language', language);
 			axios
 				.post(
-					'http://localhost:5000/user/basicprofile',
+					'https://cure-smart-backend.onrender.com/user/basicprofile',
 					formData,
 					authorization
 				)

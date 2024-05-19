@@ -12,7 +12,10 @@ function PatientDetails() {
 			},
 		};
 		axios
-			.get('http://localhost:5000/user/patientDetail', authorization)
+			.get(
+				'https://cure-smart-backend.onrender.com/user/patientDetail',
+				authorization
+			)
 			.then((data) => {
 				setPatientData(data.data.data);
 			})

@@ -14,7 +14,10 @@ function ActiveTreatment({ setAdd, setAddId }) {
 			},
 		};
 		axios
-			.get('http://localhost:5000/doctor/activeTreatment', authorization)
+			.get(
+				'https://cure-smart-backend.onrender.com/doctor/activeTreatment',
+				authorization
+			)
 			.then((data) => {
 				setArray(data.data.data);
 			})

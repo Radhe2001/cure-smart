@@ -15,11 +15,14 @@ function Register() {
 		if (name && password && email) {
 			if (user === 'Patient') {
 				axios
-					.post('http://localhost:5000/user/register', {
-						name: name,
-						email: email,
-						password: password,
-					})
+					.post(
+						'https://cure-smart-backend.onrender.com/user/register',
+						{
+							name: name,
+							email: email,
+							password: password,
+						}
+					)
 					.then((data) => {
 						if (data.status === 200)
 							alert('Registration successful');
@@ -38,11 +41,14 @@ function Register() {
 					});
 			} else if (user === 'Doctor') {
 				axios
-					.post('http://localhost:5000/doctor/register', {
-						name: name,
-						email: email,
-						password: password,
-					})
+					.post(
+						'https://cure-smart-backend.onrender.com/doctor/register',
+						{
+							name: name,
+							email: email,
+							password: password,
+						}
+					)
 					.then((data) => {
 						if (data.status === 200)
 							alert('Registration successful');

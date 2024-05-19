@@ -19,7 +19,7 @@ function Request() {
 		if (addId !== '') {
 			axios
 				.get(
-					'http://localhost:5000/doctor/getActivePrescription/' +
+					'https://cure-smart-backend.onrender.com/doctor/getActivePrescription/' +
 						addId
 				)
 				.then((data) => {
@@ -32,7 +32,8 @@ function Request() {
 		if (viewId !== '') {
 			axios
 				.get(
-					'http://localhost:5000/doctor/getPastPrescription/' + viewId
+					'https://cure-smart-backend.onrender.com/doctor/getPastPrescription/' +
+						viewId
 				)
 				.then((data) => {
 					setViewData(data.data);
@@ -43,10 +44,13 @@ function Request() {
 	const handleSend = () => {
 		if (prescription !== '') {
 			axios
-				.post('http://localhost:5000/doctor/addPrescription', {
-					prescription: prescription,
-					id: addId,
-				})
+				.post(
+					'https://cure-smart-backend.onrender.com/doctor/addPrescription',
+					{
+						prescription: prescription,
+						id: addId,
+					}
+				)
 				.then((data) => alert('Prescription added successfully'))
 				.catch((err) => alert('Failed to add the prescription'));
 		} else alert('Please write prescription first');
@@ -100,7 +104,7 @@ function Request() {
 									<Link
 										className="ml-4 text-white hover:text-cyan-500 text-lg tracking-wider underline underline-offset-4"
 										href={
-											'http://localhost:5000/Images/' +
+											'https://cure-smart-backend.onrender.com/Images/' +
 											viewData.test
 										}
 										download="filename.jpg"
@@ -118,7 +122,7 @@ function Request() {
 									<Link
 										className="ml-4 text-white hover:text-cyan-500 text-lg tracking-wider underline underline-offset-4"
 										href={
-											'http://localhost:5000/Images/' +
+											'https://cure-smart-backend.onrender.com/Images/' +
 											viewData.symptom
 										}
 										download="filename.jpg"
@@ -330,7 +334,7 @@ function Request() {
 									<Link
 										className="ml-4 text-white hover:text-cyan-500 text-lg tracking-wider underline underline-offset-4"
 										href={
-											'http://localhost:5000/Images/' +
+											'https://cure-smart-backend.onrender.com/Images/' +
 											activeData.test
 										}
 										download="filename.jpg"
@@ -350,7 +354,7 @@ function Request() {
 									<Link
 										className="ml-4 text-white hover:text-cyan-500 text-lg tracking-wider underline underline-offset-4"
 										href={
-											'http://localhost:5000/Images/' +
+											'https://cure-smart-backend.onrender.com/Images/' +
 											activeData.symptom
 										}
 										download="filename.jpg"

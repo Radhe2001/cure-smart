@@ -14,7 +14,10 @@ function PastTreatments({ setView, setViewId }) {
 			},
 		};
 		axios
-			.get('http://localhost:5000/user/pastTreatment', authorization)
+			.get(
+				'https://cure-smart-backend.onrender.com/user/pastTreatment',
+				authorization
+			)
 			.then((data) => {
 				setArray(data.data.data);
 			})

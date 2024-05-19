@@ -36,7 +36,7 @@ function MedicalDetails() {
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		axios
-			.get('http://localhost:5000/user/get', {
+			.get('https://cure-smart-backend.onrender.com/user/get', {
 				headers: {
 					Authorization: token,
 				},
@@ -80,10 +80,10 @@ function MedicalDetails() {
 				Authorization: token,
 			},
 		};
-		
+
 		axios
 			.post(
-				'http://localhost:5000/user/medicalprofile',
+				'https://cure-smart-backend.onrender.com/user/medicalprofile',
 				{
 					bloodGroup: bloodGroup,
 					height: height,

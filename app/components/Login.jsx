@@ -21,10 +21,13 @@ function Login() {
 		if (email && password) {
 			if (user === 'Patient') {
 				axios
-					.post('http://localhost:5000/user/login', {
-						email: email,
-						password: password,
-					})
+					.post(
+						'https://cure-smart-backend.onrender.com/user/login',
+						{
+							email: email,
+							password: password,
+						}
+					)
 					.then((data) => {
 						if (data.status === 200) {
 							if (remember === true)
@@ -46,10 +49,13 @@ function Login() {
 					});
 			} else if (user === 'Doctor') {
 				axios
-					.post('http://localhost:5000/doctor/login', {
-						email: email,
-						password: password,
-					})
+					.post(
+						'https://cure-smart-backend.onrender.com/doctor/login',
+						{
+							email: email,
+							password: password,
+						}
+					)
 					.then((data) => {
 						if (data.status === 200) {
 							if (remember === true)
@@ -71,10 +77,13 @@ function Login() {
 					});
 			} else {
 				axios
-					.post('http://localhost:5000/admin/login', {
-						email: email,
-						password: password,
-					})
+					.post(
+						'https://cure-smart-backend.onrender.com/admin/login',
+						{
+							email: email,
+							password: password,
+						}
+					)
 					.then((data) => {
 						if (data.status === 200) {
 							router.push('/admin');

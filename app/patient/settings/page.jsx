@@ -69,7 +69,7 @@ function Settings() {
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		axios
-			.get('http://localhost:5000/user/get', {
+			.get('https://cure-smart-backend.onrender.com/user/get', {
 				headers: {
 					Authorization: token,
 				},
@@ -79,7 +79,8 @@ function Settings() {
 				setPhone(data.data.data.phone);
 				setLanguage(data.data.data.language);
 				setImage(
-					'http://localhost:5000/Images/' + data.data.data.image
+					'https://cure-smart-backend.onrender.com/Images/' +
+						data.data.data.image
 				);
 			})
 			.catch((err) => alert('some error occured please try again'));
@@ -95,7 +96,7 @@ function Settings() {
 				};
 				axios
 					.post(
-						'http://localhost:5000/user/setpassword',
+						'https://cure-smart-backend.onrender.com/user/setpassword',
 						{ oldPassword: oldPassword, newPassword: newPassword },
 						authorization
 					)
@@ -129,7 +130,7 @@ function Settings() {
 		};
 		axios
 			.post(
-				'http://localhost:5000/user/delete',
+				'https://cure-smart-backend.onrender.com/user/delete',
 				{
 					password: password,
 				},

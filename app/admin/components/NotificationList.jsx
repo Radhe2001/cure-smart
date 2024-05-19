@@ -6,7 +6,9 @@ function NotificationList() {
 	const [notificationList, setNotificationList] = useState([]);
 	useEffect(() => {
 		axios
-			.get('http://localhost:5000/admin/notification/get')
+			.get(
+				'https://cure-smart-backend.onrender.com/admin/notification/get'
+			)
 			.then((data) => {
 				setNotificationList(data.data);
 			})
@@ -14,7 +16,10 @@ function NotificationList() {
 	}, []);
 	const handleRemove = (id) => {
 		axios
-			.delete('http://localhost:5000/admin/notification/delete/' + id)
+			.delete(
+				'https://cure-smart-backend.onrender.com/admin/notification/delete/' +
+					id
+			)
 			.then((data) => {
 				alert('Notification removed successfully');
 			})

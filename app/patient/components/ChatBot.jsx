@@ -18,7 +18,9 @@ function ChatBot({ changeShowChat }) {
 		e.preventDefault();
 		setQues([...ques, mes]);
 		axios
-			.post('http://localhost:5000/user/chat', { mes: mes })
+			.post('https://cure-smart-backend.onrender.com/user/chat', {
+				mes: mes,
+			})
 			.then((data) => {
 				setResp([...resp, data.data]);
 				setToggle(!toggle);

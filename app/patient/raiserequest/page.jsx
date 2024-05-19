@@ -16,7 +16,7 @@ function Raiserequest({ searchParams }) {
 		if (searchParams.doc === 'any') {
 			setDisabled(false);
 			axios
-				.get('http://localhost:5000/admin/doctors')
+				.get('https://cure-smart-backend.onrender.com/admin/doctors')
 				.then((data) => {
 					setDoctors(data.data.user);
 				})
@@ -25,7 +25,10 @@ function Raiserequest({ searchParams }) {
 			setDisabled(true);
 			setId(searchParams.doc);
 			axios
-				.get('http://localhost:5000/doctor/detail/' + searchParams.doc)
+				.get(
+					'https://cure-smart-backend.onrender.com/doctor/detail/' +
+						searchParams.doc
+				)
 				.then((data) => {
 					setDoctor(data.data.user);
 					setDoc(data.data.user.name);
@@ -49,7 +52,7 @@ function Raiserequest({ searchParams }) {
 			formData.append('doc', doc);
 			axios
 				.post(
-					'http://localhost:5000/doctor/prescriptionRequest',
+					'https://cure-smart-backend.onrender.com/doctor/prescriptionRequest',
 					formData,
 					authorization
 				)
@@ -104,7 +107,7 @@ function Raiserequest({ searchParams }) {
 								style={{
 									backgroundImage: `url(${
 										disabled
-											? 'http://localhost:5000/Images/' +
+											? 'https://cure-smart-backend.onrender.com/Images/' +
 											  doctor.image
 											: '/images/Doctor_logo.png'
 									})`,

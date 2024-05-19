@@ -7,7 +7,7 @@ function DoctorRequest() {
 	const [toggle, setToggle] = useState(false);
 	useEffect(() => {
 		axios
-			.get('http://localhost:5000/admin/request')
+			.get('https://cure-smart-backend.onrender.com/admin/request')
 			.then((data) => {
 				if (data.status === 200) {
 					setRequestList(data.data.user);
@@ -17,7 +17,7 @@ function DoctorRequest() {
 	}, [toggle]);
 	const handleApprove = (id) => {
 		axios
-			.post(`http://localhost:5000/admin/approve/${id}`)
+			.post(`https://cure-smart-backend.onrender.com/admin/approve/${id}`)
 			.then((data) => {
 				if (data.status === 200) alert('Doctor approved successfully');
 			})

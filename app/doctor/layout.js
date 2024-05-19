@@ -10,14 +10,15 @@ export default function RootLayout({ children }) {
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		axios
-			.get('http://localhost:5000/doctor/get', {
+			.get('https://cure-smart-backend.onrender.com/doctor/get', {
 				headers: {
 					Authorization: token,
 				},
 			})
 			.then((data) => {
 				setImage(
-					'http://localhost:5000/Images/' + data.data.data.image
+					'https://cure-smart-backend.onrender.com/Images/' +
+						data.data.data.image
 				);
 			})
 			.catch((err) => alert('some error occured please try again'));
@@ -27,7 +28,7 @@ export default function RootLayout({ children }) {
 			<div className="fixed h-[100vh]  bg-[#502779]">
 				<Navbar />
 			</div>
-			<div className=" h-[100vh] bg-[#F9AAD0]" >
+			<div className=" h-[100vh] bg-[#F9AAD0]">
 				<div
 					className={` h-[100vh]  ${
 						darkBg ? 'bg-[#503642]' : 'bg-[#F9AAD0]'

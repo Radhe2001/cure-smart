@@ -14,19 +14,20 @@ export default function RootLayout({ children }) {
 	useEffect(() => {
 		let token = localStorage.getItem('token');
 		axios
-			.get('http://localhost:5000/user/get', {
+			.get('https://cure-smart-backend.onrender.com/user/get', {
 				headers: {
 					Authorization: token,
 				},
 			})
 			.then((data) => {
 				setImage(
-					'http://localhost:5000/Images/' + data.data.data.image
+					'https://cure-smart-backend.onrender.com/Images/' +
+						data.data.data.image
 				);
 			})
 			.catch((err) => alert('some error occured please try again'));
 	}, []);
-	
+
 	return (
 		<div className="">
 			<div className="fixed z-[20] h-[100vh] bg-[#502779]">

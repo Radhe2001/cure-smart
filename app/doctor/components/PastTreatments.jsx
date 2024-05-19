@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppData } from '@/app/context';
 import axios from 'axios';
 
-function PastTreatments({  setView, setViewId }) {
+function PastTreatments({ setView, setViewId }) {
 	const [array, setArray] = useState([]);
 	const { darkBg, setDarkBg } = useAppData();
 
@@ -15,7 +15,10 @@ function PastTreatments({  setView, setViewId }) {
 			},
 		};
 		axios
-			.get('http://localhost:5000/doctor/pastTreatment', authorization)
+			.get(
+				'https://cure-smart-backend.onrender.com/doctor/pastTreatment',
+				authorization
+			)
 			.then((data) => {
 				setArray(data.data.data);
 			})

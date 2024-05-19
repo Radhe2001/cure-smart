@@ -6,7 +6,9 @@ function Appointments() {
 	const [notificationList, setNotificationList] = useState([]);
 	useEffect(() => {
 		axios
-			.get('http://localhost:5000/admin/notification/get')
+			.get(
+				'https://cure-smart-backend.onrender.com/admin/notification/get'
+			)
 			.then((data) => {
 				setNotificationList(data.data);
 			})

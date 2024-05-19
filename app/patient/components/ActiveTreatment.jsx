@@ -14,7 +14,10 @@ function ActiveTreatment({ setView, setViewId }) {
 			},
 		};
 		axios
-			.get('http://localhost:5000/user/activeTreatment', authorization)
+			.get(
+				'https://cure-smart-backend.onrender.com/user/activeTreatment',
+				authorization
+			)
 			.then((data) => {
 				setArray(data.data.data);
 			})
