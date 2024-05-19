@@ -57,9 +57,12 @@ function Raiserequest({ searchParams }) {
 					authorization
 				)
 				.then((data) => {
-					if (data.status === 200)
+					if (data.status === 200) {
 						alert('prescription requested successfully');
-					else alert('failed to request prescription');
+						setDescription('');
+						setTest('');
+						setSymptoms('');
+					} else alert('failed to request prescription');
 				})
 				.catch((err) => {
 					alert('Some unexpected error occurred');
